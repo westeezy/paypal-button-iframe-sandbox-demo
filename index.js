@@ -10,7 +10,7 @@ let iframeHost = "https://fly.io/test";
 
 if (process.env.ENVIRONMENT === "LOCAL") {
     const iframeExpressApp = { app: express(), port: 4000 };
-    iframeExpressApp.app.use("/public", express.static("public"));
+    iframeExpressApp.app.use("/public", express.static("docs"));
     iframeHost = `http://localhost:${iframeExpressApp.port}`;
 
     iframeExpressApp.app.listen(iframeExpressApp.port, () => {
