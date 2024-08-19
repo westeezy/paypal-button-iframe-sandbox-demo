@@ -11,8 +11,6 @@ const iframeSettings = {
   url: "https://www.gregjopa.com/paypal-button-iframe-sandbox-demo/iframe.html"
 };
 
-let iframeHost = "https://gregjopa.com";
-
 if (process.env.ENVIRONMENT === "LOCAL") {
     const iframeExpressApp = { app: express(), port: 4000 };
     iframeExpressApp.app.use("/public", express.static("docs"));
@@ -20,7 +18,7 @@ if (process.env.ENVIRONMENT === "LOCAL") {
     iframeSettings.url = `http://localhost:${iframeExpressApp.port}/public/iframe.html`;
 
     iframeExpressApp.app.listen(iframeExpressApp.port, () => {
-      console.log(`Static file server started at http://localhost:${iframeExpressApp.port}/`);
+      // console.log(`Static file server started at http://localhost:${iframeExpressApp.port}/`);
     });
 }
 
@@ -29,5 +27,5 @@ mainExpressApp.app.get('/', (req, res) => {
 });
 
 mainExpressApp.app.listen(mainExpressApp.port, () => {
-  console.log(`Server started at http://localhost:${mainExpressApp.port}/`);
+  console.log(`Start here: http://localhost:${mainExpressApp.port}/`);
 });

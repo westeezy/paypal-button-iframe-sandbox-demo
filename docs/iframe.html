@@ -35,6 +35,12 @@
       } catch(error) {
         console.error(error);
       }
+      
+      try {
+        window.parent.postMessage("Sending a message from the child iframe", "*");
+      } catch(error) {
+        console.error(error);
+      }
     </script>
     <script>
       (async () => {

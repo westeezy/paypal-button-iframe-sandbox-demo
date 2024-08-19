@@ -4,7 +4,7 @@
   "description": "This demo loads the PayPal JS SDK in a sandboxed iframe.",
   "main": "index.js",
   "scripts": {
-    "local": "ENVIRONMENT=LOCAL node index.js",
+    "start": "ENVIRONMENT=LOCAL node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

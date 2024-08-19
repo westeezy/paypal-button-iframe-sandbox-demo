@@ -55,8 +55,8 @@
   
 
     <p>
-      The cross-origin iframe cannot access the parent page with <code>window.parent</code>.
-      The only way for the cross-origin iframe to communicate with the parent page is with <code>window.postMessage()</code>.
+      A cross-origin iframe has very limited access to the parent page (<a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy#cross-origin_script_api_access" target="_blank">read more on MDN about Cross-origin Script API Access</a>).
+      Post message is the only way for the cross-origin iframe to communicate with the parent page (<code>window.parent.postMessage()</code>).
     </p>
   
     <h4>Examples blocking access to the parent page</h4>
@@ -78,5 +78,22 @@
     Blocked a frame with origin "<%= iframeSettings.origin %>" from accessing a cross-origin frame.
       </pre>
     </p>
+
+    <script>
+
+window.addEventListener(
+  "message",
+  (event) => {
+    console.log({
+      fullEventPayload: event,
+      data: event.data
+    })
+    if (event.origin !== "http://example.org:8080") return;
+
+    // …
+  },
+  false,
+);
+    </script>
   </body>
 </html>
