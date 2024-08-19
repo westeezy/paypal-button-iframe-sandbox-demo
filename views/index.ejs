@@ -19,7 +19,7 @@
     </script>
 
     <iframe
-      src="<%= iframeHost %>/public/iframe.html"
+      src="<%= iframeSettings.url %>"
       sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
       allow="payment"
       width="800"
@@ -66,7 +66,7 @@
       <code>window.parent.document</code> will throw the following error:
       <pre>
     DOMException: Failed to read a named property 'document' from 'Window':
-    Blocked a frame with origin "<%= iframeHost %>" from accessing a cross-origin frame.
+    Blocked a frame with origin "<%= iframeSettings.origin %>" from accessing a cross-origin frame.
       </pre>
     </p>
     
@@ -75,7 +75,7 @@
       <code>window.parent.location.href</code> will throw the following error:
       <pre>
     DOMException: Failed to read a named property 'href' from 'Location': 
-    Blocked a frame with origin "<%= iframeHost %>" from accessing a cross-origin frame.
+    Blocked a frame with origin "<%= iframeSettings.origin %>" from accessing a cross-origin frame.
       </pre>
     </p>
   </body>
