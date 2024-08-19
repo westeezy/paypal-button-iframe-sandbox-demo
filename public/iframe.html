@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PayPal v5 SDK integration</title>
+    <style>
+      body {
+        background-color: lightskyblue;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cross-origin iframe (hosted by partner)</h1>
+    <p id="label"></p>
+    <div id="paypal-buttons"></div>
+    <!-- demo with data-popups-disabled="true" -->
+    <script src="https://sandbox.paypal.com/sdk/js?client-id=test" ></script>
+    <script>
+      const origin = new URL(document.location.href).origin;
+      document.querySelector("#label").innerHTML = `Partner page origin: ${origin} <br> SDK version: ${window.paypal.version}`;
+
+      try {
+        console.log({
+        parentDocument: window.parent.document
+      })
+      } catch(error) {
+        console.error(error);
+      }
+      
+      try {
+        console.log({
+        parentUrl: window.parent.location.href,
+      })
+      } catch(error) {
+        console.error(error);
+      }
+    </script>
+    <script>
+      (async () => {
+        window.paypal.Buttons({ fundingSource: "paypal" }).render("#paypal-buttons");
+      })();
+    </script>
+  </body>
+</html>
