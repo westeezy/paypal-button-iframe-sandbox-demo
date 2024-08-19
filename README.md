@@ -10,3 +10,5 @@ npm start
 
 # Start here: http://localhost:3434/
 ```
+
+![demo screenshot](./demo-screenshot.jpg)
