@@ -1,0 +1,27 @@
+# fly.toml app configuration file generated for iframe-sandbox-demo on 2024-08-19T12:57:27-05:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'iframe-sandbox-demo'
+primary_region = 'ord'
+
+[build]
+
+[env]
+  EXPRESS_PORT = "8080"
+  EXPRESS_HOST = "0.0.0.0"
+  ENVIRONMENT = "production"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

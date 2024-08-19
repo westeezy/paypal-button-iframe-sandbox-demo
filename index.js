@@ -1,7 +1,8 @@
 const express = require("express");
-const path = require("path");
 
-const mainExpressApp = { app: express(), port: 3434 };
+
+const mainPort = process.env.EXPRESS_PORT ?? 3434;
+const mainExpressApp = { app: express(), port: mainPort };
 
 mainExpressApp.app.set("view engine", "ejs");
 
