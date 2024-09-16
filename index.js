@@ -8,7 +8,7 @@ mainExpressApp.app.set("view engine", "ejs");
 
 const iframeSettings = {
   origin: "https://www.gregjopa.com",
-  url: "https://www.gregjopa.com/paypal-button-iframe-sandbox-demo/iframe.html"
+  url: "https://www.gregjopa.com/paypal-button-iframe-sandbox-demo/iframe-v6.html"
 };
 
 if (process.env.ENVIRONMENT === "LOCAL") {
