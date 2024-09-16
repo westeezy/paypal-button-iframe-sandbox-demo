@@ -15,7 +15,7 @@ if (process.env.ENVIRONMENT === "LOCAL") {
     const iframeExpressApp = { app: express(), port: 4000 };
     iframeExpressApp.app.use("/public", express.static("docs"));
     iframeSettings.origin = `http://localhost:${iframeExpressApp.port}`;
-    iframeSettings.url = `http://localhost:${iframeExpressApp.port}/public/iframe.html`;
+    iframeSettings.url = `http://localhost:${iframeExpressApp.port}/public/iframe-v6.html`;
 
     iframeExpressApp.app.listen(iframeExpressApp.port, () => {
       // console.log(`Static file server started at http://localhost:${iframeExpressApp.port}/`);
