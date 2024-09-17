@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Merchant page with cross-origin iframe loading PayPal SDK</title>
+    <title>Merchant page with cross-origin iframe loading PayPal v5 SDK</title>
     <style>
       body {
         background-color: whitesmoke;
@@ -14,44 +14,17 @@
     <h1>Merchant page</h1>
     <p id="label"></p>
 
-    <fieldset>
-      <legend>Select the PayPal SDK version:</legend>
-    
-      <div>
-        <input type="radio" id="sdk-v5" name="sdk-selection" value="v5" />
-        <label for="sdk-v5">v5</label>
-      </div>
-    
-      <div>
-        <input type="radio" id="sdk-v6" name="sdk-selection" value="v6" checked />
-        <label for="sdk-v6">v6</label>
-      </div>
-    </fieldset>
-    <br>
+    <button id="custom-paypal-button" type="button">PayPal Button</button>
 
     <script>
       const origin = new URL(document.location.href).origin;
       document.querySelector("#label").innerHTML = `Merchant page origin: ${origin}`;
 
-      document.querySelectorAll('input[name="sdk-selection"]').forEach((element) => {
-        element.addEventListener("click", (event) => {
-          let iframeUrl = new URL(document.querySelector("#iframe-wrapper").src);
-
-          if (event.target.value === "v6") {
-            iframeUrl.pathname = iframeUrl.pathname.replace("iframe.html", "iframe-v6.html");
-          } else {
-            iframeUrl.pathname = iframeUrl.pathname.replace("iframe-v6.html", "iframe.html");
-          }
-
-          const newIframeUrl = iframeUrl.toString();
-
-          if (document.querySelector("#iframe-wrapper").src !== newIframeUrl) {
-            document.querySelector("#iframe-wrapper").src = iframeUrl.toString();
-          }
-
-        });
-      })
-
+      document.querySelector("#custom-paypal-button").addEventListener("click", () => {
+        document.querySelector("#iframe-wrapper").contentWindow.postMessage({
+          eventName: "paypal-button-click"
+        }, "<%= iframeSettings.url %>");
+      });
     </script>
 
     <iframe
@@ -59,8 +32,8 @@
       src="<%= iframeSettings.url %>"
       sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
       allow="payment"
-      width="800"
-      height="200"
+      width="0"
+      height="0"
     ></iframe>
 
     <h3>Partner iframe details</h3>
@@ -118,19 +91,19 @@
 
     <script>
 
-window.addEventListener(
-  "message",
-  (event) => {
-    console.log({
-      fullEventPayload: event,
-      data: event.data
-    })
-    if (event.origin !== "http://example.org:8080") return;
+// window.addEventListener(
+//   "message",
+//   (event) => {
+//     console.log({
+//       fullEventPayload: event,
+//       data: event.data
+//     })
+//     if (event.origin !== "http://example.org:8080") return;
 
-    // …
-  },
-  false,
-);
+//     // …
+//   },
+//   false,
+// );
     </script>
   </body>
 </html>
