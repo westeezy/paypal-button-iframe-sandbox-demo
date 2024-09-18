@@ -14,6 +14,9 @@
     <h1>Cross-origin iframe (hosted by partner)</h1>
     <p id="label"></p>
     <paypal-button style="width: 320px;"></paypal-button>
+
+    <button id="render-your-own-paypal-button" type="button" style="display: block; margin-top: 10px;">Render your own PayPal button</button>
+
     <script src="https://sandbox.paypal.com/web-sdk/v6-alpha/core"></script>
     <script src="https://sandbox.paypal.com/web-sdk/v6-alpha/paypal-payments"></script>
     <script>
@@ -51,6 +54,10 @@
         });
 
         document.querySelector("paypal-button").addEventListener("click", () => {
+            paypalCheckoutSession.start({ paymentFlow: "auto" }, createOrderPromise());
+        });
+
+        document.querySelector("#render-your-own-paypal-button").addEventListener("click", () => {
             paypalCheckoutSession.start({ paymentFlow: "auto" }, createOrderPromise());
         });
       }
