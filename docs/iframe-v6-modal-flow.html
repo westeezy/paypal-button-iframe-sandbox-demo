@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PayPal v6 SDK integration</title>
+    <style>
+      body {
+        background-color: lightskyblue;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Cross-origin iframe (hosted by partner)</h1>
+    <p id="label"></p>
+    <paypal-button style="width: 320px;"></paypal-button>
+
+    <button id="render-your-own-paypal-button" type="button" style="display: block; margin-top: 10px;">Render your own PayPal button</button>
+
+    <script src="https://sandbox.paypal.com/web-sdk/v6-alpha/core"></script>
+    <script src="https://sandbox.paypal.com/web-sdk/v6-alpha/paypal-payments"></script>
+    <script>
+      const origin = new URL(document.location.href).origin;
+      document.querySelector("#label").innerHTML = `Partner page origin: ${origin} <br> SDK version: ${window.paypal.version}`;
+    </script>
+    <script>
+      async function getClientToken() {
+        const response = await fetch("https://white-rabbit-server.fly.dev/api/browser-safe-client-token");
+        const { browser_safe_access_token } = await response.json();
+        return browser_safe_access_token;
+      }
+
+      async function createOrderPromise() {
+        const response = await fetch("https://white-rabbit-server.fly.dev/api/shopping-cart/begin-checkout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            "body": "{\"cart\":[{\"sku\":\"RMJ00008\",\"quantity\":1},{\"sku\":\"RMJ00007\",\"quantity\":1}]}"
+        });
+        const json = await response.json();
+        return { orderId: json.id };
+      }
+
+      async function onLoad() {
+        const clientToken = await getClientToken();
+        const sdkInstance = await window.paypal.createInstance({
+            clientToken
+        });
+
+        const paypalCheckoutSession = sdkInstance.paypal.createCheckout({
+            //.TODO: add onApprove logic
+            onApprove: () => {
+                sendPostMessageToParent({ eventName: "modal-flow-closed" });
+            },
+            onCancel: () =>{
+                sendPostMessageToParent({ eventName: "modal-flow-closed" });
+            }
+        });
+
+        document.querySelector("paypal-button").addEventListener("click", () => {
+            paypalCheckoutSession.start({ paymentFlow: "modal" }, createOrderPromise());
+            sendPostMessageToParent({ eventName: "modal-flow-opened" });
+        });
+
+        document.querySelector("#render-your-own-paypal-button").addEventListener("click", () => {
+            paypalCheckoutSession.start({ paymentFlow: "modal" }, createOrderPromise());
+            sendPostMessageToParent({ eventName: "modal-flow-opened" });
+
+        });
+      }
+
+      function sendPostMessageToParent(payload) {
+       window.parent.postMessage(payload, new URLSearchParams(window.location.search).get("origin"));
+      }
+
+      onLoad();
+    </script>
+  </body>
+</html>

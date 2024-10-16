@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Merchant page with cross-origin iframe loading PayPal v6 SDK</title>
+    <style>
+      body {
+        background-color: whitesmoke;
+      }
+      .full-page-iframe {
+        height: 100%;
+        width: 100%;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Merchant page</h1>
+    <p id="label"></p>
+
+    <script>
+      const origin = new URL(document.location.href).origin;
+      document.querySelector("#label").innerHTML = `Merchant page origin: ${origin}`;
+
+      window.addEventListener("message", (event) => {
+        const eventName = event.data.eventName;
+        console.log({
+          fullEventPayload: event,
+          data: event.data,
+          eventName
+        })
+
+        if (eventName === "modal-flow-opened") {
+            const iframe = document.querySelector("#iframe-wrapper").classList.add("full-page-iframe");
+        } else if (eventName === "modal-flow-closed") {
+            const iframe = document.querySelector("#iframe-wrapper").classList.remove("full-page-iframe");
+        }
+      });
+
+    </script>
+
+    <iframe
+      id="iframe-wrapper"
+      src="<%= iframeSettings.url %>"
+      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+      allow="payment"
+      width="800"
+      height="250"
+    ></iframe>
+
+    <h3>Partner iframe details</h3>
+    <p>
+      Attributes required to load the PayPal JS SDK in a sandboxed iframe:
+      <ul>
+        <li>allow-scripts</li>
+        <li>allow-same-origin</li>
+        <li>allow-popups</li>
+        <li>allow-forms</li>
+      </ul>
+    <p>
+
+      <p>
+        Also, to support the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Payment_Request_API" target="_blank">Payment Request API</a> 
+        the <code>allow="payment"</code> attribute is required.
+      </p>
+  
+      For example, here's what the partner iframe wrapping the paypal sdk would look like:
+  <pre>
+    &lt;iframe
+      src="https://checkout.partner.com/paypal-button.html"
+      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+      allow="payment"
+      width="400"
+      height="200"
+    &gt;&lt;/iframe&gt;
+  </pre>
+  
+
+    <p>
+      A cross-origin iframe has very limited access to the parent page (<a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy#cross-origin_script_api_access" target="_blank">read more on MDN about Cross-origin Script API Access</a>).
+      <br>Post message is the only way for the cross-origin iframe to communicate with the parent page (<code>window.parent.postMessage()</code>).
+    </p>
+  
+    <h4>Examples blocking access to the parent page</h4>
+
+    <p>
+      1.
+      <code>window.parent.document</code> will throw the following error:
+      <pre>
+    DOMException: Failed to read a named property 'document' from 'Window':
+    Blocked a frame with origin "<%= iframeSettings.origin %>" from accessing a cross-origin frame.
+      </pre>
+    </p>
+    
+    <p>
+      2.
+      <code>window.parent.location.href</code> will throw the following error:
+      <pre>
+    DOMException: Failed to read a named property 'href' from 'Location': 
+    Blocked a frame with origin "<%= iframeSettings.origin %>" from accessing a cross-origin frame.
+      </pre>
+    </p>
+
+    <script>
+
+// window.addEventListener(
+//   "message",
+//   (event) => {
+//     console.log({
+//       fullEventPayload: event,
+//       data: event.data
+//     })
+//     if (event.origin !== "http://example.org:8080") return;
+
+//     // …
+//   },
+//   false,
+// );
+    </script>
+  </body>
+</html>
