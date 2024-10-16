@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Merchant page with cross-origin iframe loading PayPal v6 SDK</title>
+    <style>
+      body {
+        background-color: whitesmoke;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Merchant page</h1>
+    <p id="label"></p>
+
+    <script>
+      const origin = new URL(document.location.href).origin;
+      document.querySelector("#label").innerHTML = `Merchant page origin: ${origin}`;
+
+    </script>
+
+    <iframe
+      id="iframe-wrapper"
+      src="<%= iframeSettings.url %>"
+      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+      allow="payment"
+      width="800"
+      height="250"
+    ></iframe>
+
+    <div style="max-width:1000px;">
+    <h3>Example Content</h3>
+    <p>
+      Lorem ipsum odor amet, consectetuer adipiscing elit. Molestie dis aliquam dictum neque sed accumsan. Integer interdum turpis eros leo laoreet. Ultricies hendrerit nunc quam diam inceptos; eleifend vestibulum vestibulum metus. Massa sagittis potenti eros tellus est. Mauris montes ac per montes sit fusce. Fermentum mus urna augue viverra aliquam. Dapibus vestibulum gravida feugiat cras nulla interdum nostra habitasse. Cursus habitant ipsum varius metus donec mattis.
+    </p>
+    <p>
+    Euismod lorem laoreet tristique vitae volutpat tellus libero augue lacus. Efficitur luctus elementum ridiculus purus sed. In eu urna fermentum dignissim nunc eu class? Egestas hendrerit ligula nam fames posuere faucibus dolor consectetur. Dignissim nam ad vel in posuere iaculis. Amet dictum auctor malesuada aliquam sagittis tristique ante. Sodales dapibus tristique suspendisse libero magnis.
+    </p>
+    <p>
+    Ultricies praesent facilisi nascetur consequat elementum tempus sit cubilia nam. Vehicula suspendisse consequat porttitor commodo taciti ex ullamcorper. Nullam nostra nulla hac venenatis libero ex. Auctor varius dictum consectetur fringilla habitant. Urna primis porttitor hendrerit odio morbi ullamcorper fusce. Tempus taciti mus massa dis tempus mollis. Consequat curabitur placerat dictum quisque; enim a. Lobortis dictum euismod dolor urna accumsan, nunc ex ante.
+    </p>
+    <p>
+      Lorem ipsum odor amet, consectetuer adipiscing elit. Molestie dis aliquam dictum neque sed accumsan. Integer interdum turpis eros leo laoreet. Ultricies hendrerit nunc quam diam inceptos; eleifend vestibulum vestibulum metus. Massa sagittis potenti eros tellus est. Mauris montes ac per montes sit fusce. Fermentum mus urna augue viverra aliquam. Dapibus vestibulum gravida feugiat cras nulla interdum nostra habitasse. Cursus habitant ipsum varius metus donec mattis.
+    </p>
+    <p>
+    Euismod lorem laoreet tristique vitae volutpat tellus libero augue lacus. Efficitur luctus elementum ridiculus purus sed. In eu urna fermentum dignissim nunc eu class? Egestas hendrerit ligula nam fames posuere faucibus dolor consectetur. Dignissim nam ad vel in posuere iaculis. Amet dictum auctor malesuada aliquam sagittis tristique ante. Sodales dapibus tristique suspendisse libero magnis.
+    </p>
+    <p>
+    Ultricies praesent facilisi nascetur consequat elementum tempus sit cubilia nam. Vehicula suspendisse consequat porttitor commodo taciti ex ullamcorper. Nullam nostra nulla hac venenatis libero ex. Auctor varius dictum consectetur fringilla habitant. Urna primis porttitor hendrerit odio morbi ullamcorper fusce. Tempus taciti mus massa dis tempus mollis. Consequat curabitur placerat dictum quisque; enim a. Lobortis dictum euismod dolor urna accumsan, nunc ex ante.
+    </p>
+    </div>
+  </body>
+</html>

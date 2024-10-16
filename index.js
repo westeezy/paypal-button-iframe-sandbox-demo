@@ -41,11 +41,19 @@ mainExpressApp.app.get('/render-your-own-buttons', (req, res) => {
   res.render('render-your-own-buttons', { iframeSettings });
 });
 
-mainExpressApp.app.get('/auto-grow-iframe-modal-flow', (req, res) => {
+mainExpressApp.app.get('/v6/auto-grow-iframe-modal-flow', (req, res) => {
   const iframeSettings = getIframeSettings({ htmlPage: "iframe-v6-modal-flow.html" });
-  res.render('auto-grow-iframe-modal-flow', { iframeSettings });
+  res.render('v6/auto-grow-iframe-modal-flow', { iframeSettings });
 });
 
+mainExpressApp.app.get('/v6/popup-overlay-disabled', (req, res) => {
+  const iframeSettings = getIframeSettings({ htmlPage: "iframe-v6-popup-overlay-disabled.html" });
+  res.render('v6/auto-grow-iframe-modal-flow', { iframeSettings });
+});
+
+mainExpressApp.app.get('/v6', (req, res) => {
+  res.render('v6/index');
+});
 
 mainExpressApp.app.listen(mainExpressApp.port, () => {
   console.log(`Start here: http://localhost:${mainExpressApp.port}/`);

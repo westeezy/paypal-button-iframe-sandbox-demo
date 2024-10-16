@@ -51,27 +51,16 @@
         const paypalCheckoutSession = sdkInstance.paypal.createCheckout({
             //.TODO: add onApprove logic
             onApprove: () => {
-                sendPostMessageToParent({ eventName: "modal-flow-closed" });
             },
-            onCancel: () =>{
-                sendPostMessageToParent({ eventName: "modal-flow-closed" });
-            }
         });
 
         document.querySelector("paypal-button").addEventListener("click", () => {
-            paypalCheckoutSession.start({ paymentFlow: "modal" }, createOrderPromise());
-            sendPostMessageToParent({ eventName: "modal-flow-opened" });
+            paypalCheckoutSession.start({ paymentFlow: "popup", fullPageOverlay: { enabled: false } }, createOrderPromise());
         });
 
         document.querySelector("#render-your-own-paypal-button").addEventListener("click", () => {
-            paypalCheckoutSession.start({ paymentFlow: "modal" }, createOrderPromise());
-            sendPostMessageToParent({ eventName: "modal-flow-opened" });
-
+            paypalCheckoutSession.start({ paymentFlow: "popup", fullPageOverlay: { enabled: false } }, createOrderPromise());
         });
-      }
-
-      function sendPostMessageToParent(payload) {
-       window.parent.postMessage(payload, new URLSearchParams(window.location.search).get("origin"));
       }
 
       onLoad();
