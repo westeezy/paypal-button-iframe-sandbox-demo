@@ -6,8 +6,8 @@
     <title>PayPal v6 SDK integration</title>
   </head>
   <body>
-    <script src="https://www.sandbox.paypal.com/web-sdk/v6-alpha/core"></script>
-    <script src="https://www.sandbox.paypal.com/web-sdk/v6-alpha/paypal-payments"></script>
+    <script src="https://www.sandbox.paypal.com/web-sdk/v6-beta/core"></script>
+    <script src="https://www.sandbox.paypal.com/web-sdk/v6-beta/paypal-payments"></script>
     <script>
       async function getClientToken() {
         const response = await fetch("https://white-rabbit-server.fly.dev/api/browser-safe-client-token");
@@ -33,7 +33,7 @@
             clientToken
         });
 
-        const paypalCheckoutSession = sdkInstance.paypal.createCheckout({
+        const paypalCheckoutSession = sdkInstance.createPayPalCheckout({
             //.TODO: add onApprove logic
             onApprove: () => {}
         });
