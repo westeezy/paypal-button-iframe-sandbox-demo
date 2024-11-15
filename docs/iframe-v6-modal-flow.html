@@ -48,7 +48,7 @@
             clientToken
         });
 
-        const paypalCheckoutSession = sdkInstance.paypal.createCheckout({
+        const paypalCheckoutSession = sdkInstance.createPayPalCheckout({
             //.TODO: add onApprove logic
             onApprove: () => {
                 sendPostMessageToParent({ eventName: "modal-flow-closed" });
