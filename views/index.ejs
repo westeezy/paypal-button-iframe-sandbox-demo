@@ -16,12 +16,12 @@
 
     <fieldset>
       <legend>Select the PayPal SDK version:</legend>
-    
+
       <div>
         <input type="radio" id="sdk-v5" name="sdk-selection" value="v5" />
         <label for="sdk-v5">v5</label>
       </div>
-    
+
       <div>
         <input type="radio" id="sdk-v6" name="sdk-selection" value="v6" checked />
         <label for="sdk-v6">v6</label>
@@ -57,11 +57,15 @@
     <iframe
       id="iframe-wrapper"
       src="<%= iframeSettings.url %>"
-      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+      sandbox="allow-scripts allow-same-origin allow-popups"
       allow="payment"
       width="800"
       height="250"
     ></iframe>
+
+    <h3>Demo</h3>
+
+    This demo removed allow-forms from iframe attributes for demonstration purposes
 
     <h3>Partner iframe details</h3>
     <p>
@@ -75,10 +79,10 @@
     <p>
 
       <p>
-        Also, to support the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Payment_Request_API" target="_blank">Payment Request API</a> 
+        Also, to support the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Payment_Request_API" target="_blank">Payment Request API</a>
         the <code>allow="payment"</code> attribute is required.
       </p>
-  
+
       For example, here's what the partner iframe wrapping the paypal sdk would look like:
   <pre>
     &lt;iframe
@@ -89,13 +93,13 @@
       height="200"
     &gt;&lt;/iframe&gt;
   </pre>
-  
+
 
     <p>
       A cross-origin iframe has very limited access to the parent page (<a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy#cross-origin_script_api_access" target="_blank">read more on MDN about Cross-origin Script API Access</a>).
       <br>Post message is the only way for the cross-origin iframe to communicate with the parent page (<code>window.parent.postMessage()</code>).
     </p>
-  
+
     <h4>Examples blocking access to the parent page</h4>
 
     <p>
@@ -106,12 +110,12 @@
     Blocked a frame with origin "<%= iframeSettings.origin %>" from accessing a cross-origin frame.
       </pre>
     </p>
-    
+
     <p>
       2.
       <code>window.parent.location.href</code> will throw the following error:
       <pre>
-    DOMException: Failed to read a named property 'href' from 'Location': 
+    DOMException: Failed to read a named property 'href' from 'Location':
     Blocked a frame with origin "<%= iframeSettings.origin %>" from accessing a cross-origin frame.
       </pre>
     </p>
